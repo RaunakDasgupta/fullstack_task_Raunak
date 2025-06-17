@@ -68,9 +68,8 @@ async function startServer(): Promise<void> {
     await database.connect();
 
     const httpServer = app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📡 API available at http://localhost:${PORT}/api`);
-      console.log(`🔍 Health check at http://localhost:${PORT}/health`);
+      console.log(`Server running on port ${PORT}`);
+      console.log(`API available at http://localhost:${PORT}/api`);
     });
 
     const io = new Server(httpServer, {
@@ -81,28 +80,28 @@ async function startServer(): Promise<void> {
     });
 
     io.on("connection", (socket) => {
-      console.log("🔥 Socket connected:", socket.id);
+      console.log(" Socket connected:", socket.id);
 
       socket.on("add", async (item) => {
-        console.log("➕ Adding item:", item);
+        console.log(" Adding item:", item);
         const redisKey = `FULLSTACK_TASK_Raunak`;
         redisService.addItem(redisKey, item);
         const itemCount = redisService.getItemCount(redisKey);
         console.log("Item count in Redis:", itemCount);
 
         if (typeof itemCount === "number" && itemCount > 50) {
-          console.log("➡️ Moving items to MongoDB");
+          console.log("Moving items to MongoDB");
           const items = redisService.getAllItems(redisKey);
           mongoService.addItems(items);
           redisService.clearItems(redisKey);
-          console.log("✅ Items moved to MongoDB and Redis cleared");
+          console.log("Items moved to MongoDB and Redis cleared");
         }
 
         io.emit("update", redisService.getAllItems(redisKey));
       });
 
       socket.on("disconnect", () => {
-        console.log("💔 Socket disconnected:", socket.id);
+        console.log("Socket disconnected:", socket.id);
       });
     });
 
@@ -115,12 +114,12 @@ async function startServer(): Promise<void> {
 
 // Graceful shutdown
 process.on("SIGINT", async () => {
-  console.log("\n🛑 Shutting down gracefully...");
+  console.log("\n Shutting down...");
 
   try {
     await disconnectRedis();
     await database.disconnect();
-    console.log("✅ All connections closed");
+    console.log(" All connections closed");
     process.exit(0);
   } catch (error) {
     console.error("Error during shutdown:", error);
@@ -129,7 +128,7 @@ process.on("SIGINT", async () => {
 });
 
 process.on("SIGTERM", async () => {
-  console.log("🛑 SIGTERM received, shutting down...");
+  console.log(" SIGTERM received, shutting down...");
   await disconnectRedis();
   await database.disconnect();
   process.exit(0);

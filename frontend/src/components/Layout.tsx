@@ -18,9 +18,9 @@ export const Layout: React.FC<LayoutProps> = ({
         <div className="card p-8">
           <div className="flex flex--between flex--center mb-6">
             <div>
-              <h1 className="text--3xl mb-2">📝 Todo Manager</h1>
+              <h1 className="text--3xl mb-2">📝 Notes App</h1>
               <p className="text--muted">
-                Add todos via MQTT (/add topic) or view all your tasks here
+                Add notes via Socket.io (/add topic) or view all your notes here
               </p>
             </div>
             {onRefresh && (
