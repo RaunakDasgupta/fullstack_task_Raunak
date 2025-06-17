@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { todoApi } from "../services/api";
-import { TodoItem, TodoStats } from "../types";
+import { TodoItem } from "../types";
 
 interface UseTodosReturn {
   todos: TodoItem[];
