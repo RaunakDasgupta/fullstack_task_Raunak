@@ -26,7 +26,7 @@ To start the application using Docker, follow these steps:
 1.  Clone the repository:
 
     ```bash
-    git clone [<repository_url>](https://github.com/RaunakDasgupta/fullstack_task_Raunak.git)
+    git clone https://github.com/RaunakDasgupta/fullstack_task_Raunak.git
     cd fullstack_task_Raunak
     ```
 
