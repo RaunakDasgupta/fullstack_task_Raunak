@@ -1,0 +1,101 @@
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.note-app {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.icon {
+  font-size: 1.5em;
+  color: #777;
+  margin-right: 8px;
+}
+
+.add-form {
+  margin-bottom: 15px;
+}
+
+.input-container {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+}
+
+.add-button {
+  background-color: #8b4513;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.add-icon {
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+
+.notes-container {
+  margin-top: 15px;
+  height: 300px; /* Set a fixed height for the container */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  padding-right: 10px; /* Add some padding to prevent content from being hidden by the scrollbar */
+}
+
+.notes-container h2 {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.note {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.note span {
+  flex: 1;
+}
+.note {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.note span {
+  flex: 1;
+}
