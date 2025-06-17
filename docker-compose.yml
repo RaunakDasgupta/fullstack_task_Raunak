@@ -6,7 +6,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - MONGO_URI=mongodb+srv://assignment_user:HCgEj5zv8Hxwa4xO@test-cluster.6f94f5o.mongodb.net/assignment?retryWrites=true&w=majority
+      - MONGO_URI=mongodb+srv://assignment_user:HCgEj5zv8Hxwa4xO@test-cluster.6f94f5o.mongodb.net/
       - REDIS_HOST=redis-12675.c212.ap-south-1-1.ec2.cloud.redislabs.com
       - REDIS_PORT=12675
       - REDIS_USERNAME=default
