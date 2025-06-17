@@ -41,32 +41,6 @@ export class TodoController {
       res.status(500).json(response);
     }
   }
-
-  async getStats(req: Request, res: Response): Promise<void> {
-    try {
-      const stats = {
-        totalTodos: 0,
-        inRedis: 0,
-        inMongoDB: 0,
-        completed: 0,
-        pending: 0,
-      };
-
-      const response: ApiResponse<typeof stats> = {
-        success: true,
-        data: stats,
-      };
-
-      res.status(200).json(response);
-    } catch (error) {
-      console.error("Error fetching stats:", error);
-      const response: ApiResponse<never> = {
-        success: false,
-        error: "Failed to fetch stats",
-      };
-      res.status(500).json(response);
-    }
-  }
 }
 
 export const todoController = new TodoController();

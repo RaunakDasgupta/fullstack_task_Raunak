@@ -4,16 +4,13 @@ import { TodoItem, TodoStats } from "../types";
 
 interface UseTodosReturn {
   todos: TodoItem[];
-  stats: TodoStats | null;
   loading: boolean;
   error: string | null;
   refreshTodos: () => Promise<void>;
-  refreshStats: () => Promise<void>;
 }
 
 export const useTodos = (): UseTodosReturn => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
-  const [stats, setStats] = useState<TodoStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,20 +24,11 @@ export const useTodos = (): UseTodosReturn => {
     }
   }, []);
 
-  const refreshStats = useCallback(async () => {
-    try {
-      const fetchedStats = await todoApi.getStats();
-      setStats(fetchedStats);
-    } catch (err) {
-      console.error("Error fetching stats:", err);
-    }
-  }, []);
-
   const fetchData = useCallback(async () => {
     setLoading(true);
-    await Promise.all([refreshTodos(), refreshStats()]);
+    await Promise.all([refreshTodos()]);
     setLoading(false);
-  }, [refreshTodos, refreshStats]);
+  }, [refreshTodos]);
 
   useEffect(() => {
     fetchData();
@@ -48,10 +36,8 @@ export const useTodos = (): UseTodosReturn => {
 
   return {
     todos,
-    stats,
     loading,
     error,
     refreshTodos,
-    refreshStats,
   };
 };

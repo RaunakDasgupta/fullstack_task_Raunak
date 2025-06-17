@@ -7,6 +7,5 @@ const router = Router();
 router.get("/fetchAllTasks", todoController.fetchAllTasks.bind(todoController));
 
 // GET /api/stats - Get statistics
-router.get("/stats", todoController.getStats.bind(todoController));
 
 export default router;
