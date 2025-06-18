@@ -6,12 +6,6 @@ export interface TodoItem {
   updatedAt: Date;
 }
 
-export interface MqttMessage {
-  topic: string;
-  message: string;
-  timestamp: Date;
-}
-
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;

@@ -9,6 +9,7 @@ export class RedisService {
       const existingTodos = await this.getAllTodos();
       existingTodos.push(todo);
       await redisClient.set(REDIS_KEY, JSON.stringify(existingTodos));
+      console.log(`Todo added to Redis cache with key: ${REDIS_KEY}`);
     } catch (error) {
       console.error("Error adding todo to Redis:", error);
       throw error;
@@ -42,6 +43,7 @@ export class RedisService {
   async addItem(key: string, item: any): Promise<void> {
     try {
       await redisClient.rPush(key, JSON.stringify(item));
+      console.log(`Item added to Redis cache with key: ${key}`);
     } catch (error) {
       console.error("Error adding item to Redis:", error);
       throw error;

@@ -5,7 +5,7 @@ export class MongoService {
   async saveTodos(todos: TodoItem[]): Promise<void> {
     try {
       await database.insertMany(todos);
-      console.log(`✅ Saved ${todos.length} todos to MongoDB`);
+      console.log(` Saved ${todos.length} todos to MongoDB`);
     } catch (error) {
       console.error("Error saving todos to MongoDB:", error);
       throw error;

@@ -1,8 +1,9 @@
 import { MongoClient, Db, Collection } from "mongodb";
 import { TodoItem } from "../types";
+import * as dotenv from "dotenv";
+dotenv.config({ path: `${__dirname}/../.env` });
 
-const MONGO_URI =
-  "mongodb+srv://assignment_user:HCgEj5zv8Hxwa4xO@test-cluster.6f94f5o.mongodb.net/";
+const MONGO_URI = process.env.MONGO_URI;
 const DB_NAME = "assignment";
 const COLLECTION_NAME = "assignment_raunak";
 
@@ -12,12 +13,15 @@ class Database {
 
   async connect(): Promise<void> {
     try {
+      if (!MONGO_URI) {
+        throw new Error("MONGO_URI is not defined in .env file");
+      }
       this.client = new MongoClient(MONGO_URI);
       await this.client.connect();
       this.db = this.client.db(DB_NAME);
-      console.log("✅ Connected to MongoDB successfully");
+      console.log(" Connected to MongoDB successfully");
     } catch (error) {
-      console.error("❌ MongoDB connection error:", error);
+      console.error(" MongoDB connection error:", error);
       throw error;
     }
   }
@@ -26,10 +30,10 @@ class Database {
     try {
       if (this.client) {
         await this.client.close();
-        console.log("✅ Disconnected from MongoDB");
+        console.log(" Disconnected from MongoDB");
       }
     } catch (error) {
-      console.error("❌ MongoDB disconnection error:", error);
+      console.error(" MongoDB disconnection error:", error);
     }
   }
 

@@ -80,12 +80,14 @@ async function startServer(): Promise<void> {
     });
 
     io.on("connection", (socket) => {
-      console.log(" Socket connected:", socket.id);
+      console.log("Socket connected:", socket.id);
 
       socket.on("add", async (item) => {
-        console.log(" Adding item:", item);
+        console.log("Adding item:", item);
+        console.log("Socket.IO add event received:", item);
         const redisKey = `FULLSTACK_TASK_Raunak`;
         redisService.addItem(redisKey, item);
+        console.log(`Item added to Redis list with key: ${redisKey}`);
         const itemCount = redisService.getItemCount(redisKey);
         console.log("Item count in Redis:", itemCount);
 
@@ -103,6 +105,8 @@ async function startServer(): Promise<void> {
       socket.on("disconnect", () => {
         console.log("Socket disconnected:", socket.id);
       });
+
+      console.log("Socket.IO connection established");
     });
 
     // Start HTTP server
