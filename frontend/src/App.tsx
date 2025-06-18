@@ -1,29 +1,28 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTodo } from "./redux/todoSlice";
-import { RootState } from "./redux/store";
 import { v4 as uuidv4 } from "uuid";
 import { FaRegFileAlt } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./App.css";
+import TodoList from "./components/TodoList.tsx";
 
 function App() {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos.todos);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (text.trim()) {
+    if (description.trim()) {
       const newTodo = {
         id: uuidv4(),
-        text,
+        description,
         completed: false,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
       dispatch(addTodo(newTodo));
-      setText(() => "");
+      setDescription("");
     }
   };
 
@@ -37,12 +36,11 @@ function App() {
         <form onSubmit={handleSubmit} className="add-form">
           <div className="input-container">
             <input
-              key={todos.length}
               type="text"
               className="input"
               placeholder="New Note..."
-              defaultValue={text}
-              onChange={(e) => setText(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
             <button type="submit" className="add-button">
               <AiOutlinePlus className="add-icon" />
@@ -50,16 +48,7 @@ function App() {
             </button>
           </div>
         </form>
-        <div className="notes-container">
-          <h2>Notes</h2>
-          <div className="grid grid-cols-5 gap-3">
-            {todos.map((todo) => (
-              <div key={todo.id} className="note">
-                <span>{todo.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <TodoList />
       </div>
     </div>
   );

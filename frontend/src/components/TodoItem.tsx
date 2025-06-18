@@ -48,7 +48,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
                 todo.completed && "line-through text--muted"
               )}
             >
-              {todo.text}
+              {todo.description}
             </p>
 
             <div className="flex flex--center flex--gap-4 text--xs text--muted">

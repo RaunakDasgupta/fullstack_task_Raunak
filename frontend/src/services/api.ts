@@ -1,7 +1,7 @@
 import axios from "axios";
 import { TodoItem, ApiResponse } from "../types";
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = "http://localhost:3001/api";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -21,7 +21,7 @@ apiClient.interceptors.response.use(
 );
 
 export const todoApi = {
-  async fetchAllTasks(): Promise<TodoItem[]> {
+  async fetchAllTasks() {
     try {
       const response = await apiClient.get<ApiResponse<TodoItem[]>>(
         "/fetchAllTasks"

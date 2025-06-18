@@ -1,6 +1,6 @@
 export interface TodoItem {
   id: string;
-  text: string;
+  description: string;
   completed: boolean;
   createdAt: string;
   updatedAt: string;
@@ -13,10 +13,3 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-export interface TodoStats {
-  totalTodos: number;
-  inRedis: number;
-  inMongoDB: number;
-  completed: number;
-  pending: number;
-}
