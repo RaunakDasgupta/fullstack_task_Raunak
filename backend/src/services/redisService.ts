@@ -81,18 +81,21 @@ export class RedisService {
 }
 
 export const redisService = new RedisService();
-export function addItem(redisKey: string, item: any) {
-  throw new Error("Function not implemented.");
+export async function addItem(redisKey: string, item: any) {
+  const tasks = await redisService.addItem(redisKey, item);
+  return tasks;
 }
 
-export function getItemCount(redisKey: string) {
-  throw new Error("Function not implemented.");
+export async function getItemCount(redisKey: string) {
+  const count = await redisService.getItemCount(redisKey);
+  return count;
 }
 
-export function getAllItems(redisKey: string) {
-  throw new Error("Function not implemented.");
+export async function getAllItems(redisKey: string) {
+  const items = await redisService.getAllItems(redisKey);
+  return items;
 }
 
 export function clearItems(redisKey: string) {
-  throw new Error("Function not implemented.");
+  return redisService.clearItems(redisKey);
 }

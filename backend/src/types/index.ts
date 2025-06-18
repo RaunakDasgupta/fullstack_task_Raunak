@@ -1,9 +1,6 @@
 export interface TodoItem {
-  id: string;
-  text: string;
-  completed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  description: string;
+  created_at?: Date;
 }
 
 export interface ApiResponse<T> {

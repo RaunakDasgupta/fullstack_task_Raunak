@@ -1,40 +1,39 @@
 import { database } from "../config/database";
 import { TodoItem } from "../types";
 
+import Task from "../schema/tasks";
 export class MongoService {
-  async saveTodos(todos: TodoItem[]): Promise<void> {
+  async addItems(todos: String[]): Promise<void> {
+
     try {
-      await database.insertMany(todos);
-      console.log(` Saved ${todos.length} todos to MongoDB`);
+      var items = <any>[];
+      todos.map((todo) => {
+        const todoItem = new Task({ description: todo});
+        items.push(todoItem);
+      });
+
+      await Task.insertMany(items);
+      console.log(` Saved ${items.length} todos to MongoDB`);
     } catch (error) {
       console.error("Error saving todos to MongoDB:", error);
       throw error;
     }
   }
 
-  async getAllTodos(): Promise<TodoItem[] | []> {
+  async getAllItems(): Promise<TodoItem[] | []> {
     try {
-      return await database.findAll();
+      return await Task.find({});
     } catch (error) {
-      console.error("Error getting todos from MongoDB:", error);
+      console.error("Error getting items from MongoDB:", error);
       return [];
-    }
-  }
-
-  async addItems(items: any[]): Promise<void> {
-    try {
-      await database.insertMany(items);
-    } catch (error) {
-      console.error("Error adding items to MongoDB:", error);
-      throw error;
     }
   }
 }
 
 export const mongoService = new MongoService();
 export function addItems(items: any) {
-  throw new Error("Function not implemented.");
+  return mongoService.addItems(items);
 }
-export function getAllTodos(): TodoItem[] | PromiseLike<TodoItem[]> {
-  throw new Error("Function not implemented.");
+export function getAllItems(): TodoItem[] | PromiseLike<TodoItem[]> {
+  return mongoService.getAllItems();
 }

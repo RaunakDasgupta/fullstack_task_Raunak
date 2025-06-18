@@ -3,9 +3,12 @@ import { TodoItem } from "../types";
 import * as dotenv from "dotenv";
 dotenv.config({ path: `${__dirname}/../.env` });
 
+import mongoose from "mongoose";
+
 const MONGO_URI = process.env.MONGO_URI;
-const DB_NAME = "assignment";
-const COLLECTION_NAME = "assignment_raunak";
+
+
+
 
 class Database {
   private client: MongoClient | null = null;
@@ -13,16 +16,15 @@ class Database {
 
   async connect(): Promise<void> {
     try {
-      if (!MONGO_URI) {
-        throw new Error("MONGO_URI is not defined in .env file");
-      }
-      this.client = new MongoClient(MONGO_URI);
-      await this.client.connect();
-      this.db = this.client.db(DB_NAME);
-      console.log(" Connected to MongoDB successfully");
+      const conn = await mongoose.connect(MONGO_URI!, {
+        serverSelectionTimeoutMS: 30000, // 30 seconds
+        socketTimeoutMS: 45000, // 45 seconds
+        bufferCommands: false,
+      });
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
-      console.error(" MongoDB connection error:", error);
-      throw error;
+      console.error('MongoDB connection error:', error);
+      process.exit(1);
     }
   }
 
@@ -37,22 +39,7 @@ class Database {
     }
   }
 
-  getCollection(): Collection<TodoItem> {
-    if (!this.db) {
-      throw new Error("Database not connected");
-    }
-    return this.db.collection<TodoItem>(COLLECTION_NAME);
-  }
 
-  async insertMany(todos: TodoItem[]): Promise<void> {
-    const collection = this.getCollection();
-    await collection.insertMany(todos);
-  }
-
-  async findAll(): Promise<TodoItem[]> {
-    const collection = this.getCollection();
-    return await collection.find({}).toArray();
-  }
 }
 
 export const database = new Database();

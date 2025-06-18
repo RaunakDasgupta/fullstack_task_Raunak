@@ -10,6 +10,7 @@ import * as redisService from "./services/redisService";
 import * as mongoService from "./services/mongoService";
 import { database } from "./config/database";
 import todoRoutes from "./routes/todoRoutes";
+import { addService } from "./services/addService";
 
 // Load environment variables
 dotenv.config();
@@ -86,18 +87,18 @@ async function startServer(): Promise<void> {
         console.log("Adding item:", item);
         console.log("Socket.IO add event received:", item);
         const redisKey = `FULLSTACK_TASK_Raunak`;
-        redisService.addItem(redisKey, item);
+        await addService(redisKey, item);
         console.log(`Item added to Redis list with key: ${redisKey}`);
-        const itemCount = redisService.getItemCount(redisKey);
+        const itemCount = await redisService.getItemCount(redisKey);
         console.log("Item count in Redis:", itemCount);
 
-        if (typeof itemCount === "number" && itemCount > 50) {
-          console.log("Moving items to MongoDB");
-          const items = redisService.getAllItems(redisKey);
-          mongoService.addItems(items);
-          redisService.clearItems(redisKey);
-          console.log("Items moved to MongoDB and Redis cleared");
-        }
+        // if (typeof itemCount === "number" && itemCount > 50) {
+        //   console.log("Moving items to MongoDB");
+        //   const items = await redisService.getAllItems(redisKey);
+        //   await mongoService.addItems(items);
+        //   await redisService.clearItems(redisKey);
+        //   console.log("Items moved to MongoDB and Redis cleared");
+        // }
 
         io.emit("update", redisService.getAllItems(redisKey));
       });

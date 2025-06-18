@@ -2,29 +2,14 @@ import { Request, Response } from "express";
 import { ApiResponse, TodoItem } from "../types";
 import * as redisService from "../services/redisService";
 import * as mongoService from "../services/mongoService";
+import { listService } from "../services/listService";
 
 const redisKey = `FULLSTACK_TASK_Raunak`;
 
 export class TodoController {
   async fetchAllTasks(req: Request, res: Response): Promise<void> {
     try {
-      let todos: TodoItem[] | [] = await mongoService.getAllTodos();
-
-      if (!todos || todos?.length === 0) {
-        const items: any[] = Array.isArray(redisService.getAllItems(redisKey))
-          ? (redisService.getAllItems(redisKey) as unknown as any[])
-          : [];
-        todos = items
-          ? items?.map((item: any) => ({
-              id: item.id,
-              text: item.text,
-              completed: item.completed,
-              createdAt: item.createdAt ?? new Date().toISOString(),
-              updatedAt: item.updatedAt ?? new Date().toISOString(),
-            }))
-          : [];
-      }
-
+      const todos = await listService(redisKey);
       const response: ApiResponse<TodoItem[]> = {
         success: true,
         data: todos,
