@@ -18,7 +18,7 @@ export class TodoController {
 
       res.status(200).json(response);
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      console.error("[ERROR] Error fetching todos:", error);
       const response: ApiResponse<never> = {
         success: false,
         error: "Failed to fetch todos",

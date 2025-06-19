@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useTodosContext } from "../context/TodosContext.ts";
 
 const TodoList: React.FC = () => {

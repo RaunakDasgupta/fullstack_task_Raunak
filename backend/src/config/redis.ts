@@ -16,9 +16,9 @@ export const redisClient = createClient(redisConfig);
 export const connectRedis = async (): Promise<void> => {
   try {
     await redisClient.connect();
-    console.log(" Connected to Redis successfully");
+    console.info("[INFO] Connected to Redis successfully");
   } catch (error) {
-    console.error(" Redis connection error:", error);
+    console.error("[ERROR] Redis connection error:", error);
     throw error;
   }
 };
@@ -26,7 +26,7 @@ export const connectRedis = async (): Promise<void> => {
 export const disconnectRedis = async (): Promise<void> => {
   try {
     await redisClient.disconnect();
-    console.log(" Disconnected from Redis");
+    console.info("[INFO] Disconnected from Redis");
   } catch (error) {
     console.error(" Redis disconnection error:", error);
   }

@@ -17,14 +17,14 @@ export async function addService(redisKey: string, item: any): Promise<void> {
     // Add item to Redis
     await redisService.addItem(redisKey, item);
 
-    console.log(`Item added to Redis with key: ${redisKey}`);
+    console.info(`[INFO]Item added to Redis with key: ${redisKey}`);
     if (cacheItems.length >= 50) {
-      console.log(
-        `Redis cache reached 50 items. Moved ${cacheItems.length} items from Redis to MongoDB and cleared Redis cache for key: ${redisKey}`
+      console.info(
+        `[INFO] Redis cache reached 50 items. Moved ${cacheItems.length} items from Redis to MongoDB and cleared Redis cache for key: ${redisKey}`
       );
     }
   } catch (error) {
-    console.error(`Error in addService: ${error}`);
+    console.error(`[ERROR] Error in addService: ${error}`);
     throw error;
   }
 }

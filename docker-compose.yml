@@ -12,8 +12,6 @@ services:
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_USERNAME=${REDIS_USERNAME}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
-    depends_on:
-      - mongo
     networks:
       - app-network
 
@@ -26,22 +24,6 @@ services:
     networks:
       - app-network
 
-  mongo:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    dns: 8.8.8.8
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - app-network
-
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
 
 networks:
   app-network:

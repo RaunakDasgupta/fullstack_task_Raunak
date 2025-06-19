@@ -69,8 +69,8 @@ async function startServer(): Promise<void> {
     await database.connect();
 
     const httpServer = app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`API available at http://localhost:${PORT}/api`);
+      console.info(`Server running on port ${PORT}`);
+      console.info(`API available at http://localhost:${PORT}/api`);
     });
 
     const io = new Server(httpServer, {
@@ -81,59 +81,51 @@ async function startServer(): Promise<void> {
     });
 
     io.on("connection", (socket) => {
-      console.log("Socket connected:", socket.id);
+      console.info("Socket connected:", socket.id);
 
       socket.on("add", async (item) => {
-        console.log("Adding item:", item);
-        console.log("Socket.IO add event received:", item);
+        console.info("[INFO] Adding item:", item);
+        console.info("[INFO] Socket.IO add event received:", item);
         const redisKey = `FULLSTACK_TASK_Raunak`;
         await addService(redisKey, item);
-        console.log(`Item added to Redis list with key: ${redisKey}`);
+        console.info(`[INFO] Item added to Redis list with key: ${redisKey}`);
         const itemCount = await redisService.getItemCount(redisKey);
-        console.log("Item count in Redis:", itemCount);
-
-        // if (typeof itemCount === "number" && itemCount > 50) {
-        //   console.log("Moving items to MongoDB");
-        //   const items = await redisService.getAllItems(redisKey);
-        //   await mongoService.addItems(items);
-        //   await redisService.clearItems(redisKey);
-        //   console.log("Items moved to MongoDB and Redis cleared");
-        // }
+        console.info("[INFO] Item count in Redis:", itemCount);
 
         io.emit("update", redisService.getAllItems(redisKey));
       });
 
       socket.on("disconnect", () => {
-        console.log("Socket disconnected:", socket.id);
+        console.info("[INFO] Socket disconnected:", socket.id);
       });
 
-      console.log("Socket.IO connection established");
+      console.info("[INFO] Socket.IO connection established");
     });
 
     // Start HTTP server
   } catch (error) {
-    console.error("Failed to start server:", error);
+    console.error("[ERROR] Failed to start server:", error);
     process.exit(1);
   }
 }
 
 // Graceful shutdown
 process.on("SIGINT", async () => {
-  console.log("\n Shutting down...");
+  console.info("\n [INFO] Shutting down...");
 
   try {
     await disconnectRedis();
     await database.disconnect();
-    console.log(" All connections closed");
+    console.info("[INFO] All connections closed");
     process.exit(0);
   } catch (error) {
-    console.error("Error during shutdown:", error);
+    console.error("[ERROR] Error during shutdown:", error);
     process.exit(1);
   }
 });
 
 process.on("SIGTERM", async () => {
-  console.log(" SIGTERM received, shutting down...");
+  console.error("[ERROR] SIGTERM received, shutting down...");
   await disconnectRedis();
   await database.disconnect();
   process.exit(0);

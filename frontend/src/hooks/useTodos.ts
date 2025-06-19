@@ -20,7 +20,7 @@ export const useTodos = (): UseTodosReturn => {
       const fetchedTodos = await todoApi.fetchAllTasks();
       setTodos(fetchedTodos);
       setLoading(false);
-      console.log("Todos fetched successfully");
+      console.info("[INFO] Todos fetched successfully");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
       setLoading(false);

@@ -9,9 +9,9 @@ export class RedisService {
       const existingTodos = await this.getAllTodos();
       existingTodos.push(todo);
       await redisClient.set(REDIS_KEY, JSON.stringify(existingTodos));
-      console.log(`Todo added to Redis cache with key: ${REDIS_KEY}`);
+      console.info(`[INFO] Todo added to Redis cache with key: ${REDIS_KEY}`);
     } catch (error) {
-      console.error("Error adding todo to Redis:", error);
+      console.error(`[ERROR] Error adding todo to Redis:`, error);
       throw error;
     }
   }
@@ -21,7 +21,7 @@ export class RedisService {
       const todosString = await redisClient.get(REDIS_KEY);
       return todosString ? JSON.parse(todosString) : [];
     } catch (error) {
-      console.error("Error getting todos from Redis:", error);
+      console.error(`[ERROR] Error getting todos from Redis:`, error);
       return [];
     }
   }
@@ -30,7 +30,7 @@ export class RedisService {
     try {
       await redisClient.del(REDIS_KEY);
     } catch (error) {
-      console.error("Error clearing todos from Redis:", error);
+      console.error(`[ERROR] Error clearing todos from Redis:`, error);
       throw error;
     }
   }
@@ -43,9 +43,9 @@ export class RedisService {
   async addItem(key: string, item: any): Promise<void> {
     try {
       await redisClient.rPush(key, JSON.stringify(item));
-      console.log(`Item added to Redis cache with key: ${key}`);
+      console.info(`[INFO] Item added to Redis cache with key: ${key}`);
     } catch (error) {
-      console.error("Error adding item to Redis:", error);
+      console.error(`[ERROR] Error adding item to Redis:`, error);
       throw error;
     }
   }
@@ -55,7 +55,7 @@ export class RedisService {
       const itemsString = await redisClient.lLen(key);
       return itemsString;
     } catch (error) {
-      console.error("Error getting item count from Redis:", error);
+      console.error(`[ERROR] Error getting item count from Redis:`, error);
       return 0;
     }
   }
@@ -65,7 +65,7 @@ export class RedisService {
       const itemsString = await redisClient.lRange(key, 0, -1);
       return itemsString.map((item) => JSON.parse(item));
     } catch (error) {
-      console.error("Error getting all items from Redis:", error);
+      console.error(`[ERROR] Error getting all items from Redis:`, error);
       return [];
     }
   }
@@ -74,7 +74,7 @@ export class RedisService {
     try {
       await redisClient.del(key);
     } catch (error) {
-      console.error("Error clearing items from Redis:", error);
+      console.error(`[ERROR] Error clearing items from Redis:`, error);
       throw error;
     }
   }

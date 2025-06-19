@@ -13,9 +13,9 @@ export class MongoService {
       });
 
       await Task.insertMany(items);
-      console.log(` Saved ${items.length} todos to MongoDB`);
+      console.info(`[INFO] Saved ${items.length} todos to MongoDB`);
     } catch (error) {
-      console.error("Error saving todos to MongoDB:", error);
+      console.error(`[ERROR] Error saving todos to MongoDB:`, error);
       throw error;
     }
   }
@@ -24,7 +24,7 @@ export class MongoService {
     try {
       return await Task.find({});
     } catch (error) {
-      console.error("Error getting items from MongoDB:", error);
+      console.error(`[ERROR] Error getting items from MongoDB:`, error);
       return [];
     }
   }

@@ -21,9 +21,9 @@ class Database {
         socketTimeoutMS: 45000, // 45 seconds
         bufferCommands: false,
       });
-      console.log(`MongoDB Connected: ${conn.connection.host}`);
+      console.info(`[INFO] MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
-      console.error('MongoDB connection error:', error);
+      console.error(`[ERROR] MongoDB connection error:`, error);
       process.exit(1);
     }
   }
@@ -32,10 +32,10 @@ class Database {
     try {
       if (this.client) {
         await this.client.close();
-        console.log(" Disconnected from MongoDB");
+        console.info("[INFO] Disconnected from MongoDB");
       }
     } catch (error) {
-      console.error(" MongoDB disconnection error:", error);
+      console.error("[ERROR] MongoDB disconnection error:", error);
     }
   }
 

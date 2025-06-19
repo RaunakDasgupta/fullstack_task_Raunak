@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/icons8-notes-app 1.png";
+import logo from "../assets/logo.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./App.css";
 import TodoList from "./components/TodoList.tsx";
@@ -18,22 +18,22 @@ function App() {
     });
 
     newSocket.on("connect", () => {
-      console.log("Connected to server");
+      console.info("[INFO] Connected to server");
       setIsConnected(true);
     });
 
     newSocket.on("disconnect", () => {
-      console.log("Disconnected from server");
+      console.info("[INFO] Disconnected from server");
       setIsConnected(false);
     });
 
     newSocket.on("update", async () => {
-      console.log("Update received from server");
+      console.info("[INFO] Update received from server");
       await refreshTodos();
     });
 
     newSocket.on("connect_error", (error) => {
-      console.error("Connection error:", error);
+      console.error("[ERROR] Connection error:", error);
     });
 
     setSocket(newSocket);
@@ -49,9 +49,9 @@ function App() {
       socket.emit("add", description);
       setDescription("");
       await refreshTodos();
-      console.log("Note added:", description);
+      console.info("[INFO] Note added:", description);
     } else {
-      console.error("Socket not connected or description is empty");
+      console.error("[ERROR] Socket not connected or description is empty");
     }
   };
 
