@@ -19,6 +19,10 @@ This is a full-stack Notes application built with React, Node.js, Express, Mongo
 - Docker
 - Docker Compose
 
+## Deployment
+
+The application is hosted on `http://35.154.65.190:3000/` using AWS EC2 instance.
+
 ## Getting Started
 
 To start the application using Docker, follow these steps:
