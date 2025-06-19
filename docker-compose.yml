@@ -6,12 +6,6 @@ services:
     ports:
       - "3001:3001"
     env_file: ./backend/.env
-    environment:
-      - MONGO_URI=${MONGO_URI}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_USERNAME=${REDIS_USERNAME}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
     networks:
       - app-network
 
@@ -23,7 +17,6 @@ services:
       - backend
     networks:
       - app-network
-
 
 networks:
   app-network:
