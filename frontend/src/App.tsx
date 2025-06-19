@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import  logo from "../assets/icons8-notes-app 1.png"
+import logo from "../assets/icons8-notes-app 1.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./App.css";
 import TodoList from "./components/TodoList.tsx";
@@ -10,10 +10,7 @@ function App() {
   const [description, setDescription] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [refresh, setRefresh] = useState(0);
   const { refreshTodos } = useTodosContext();
-
-  
 
   useEffect(() => {
     const newSocket = io("http://localhost:3001", {
@@ -28,6 +25,11 @@ function App() {
     newSocket.on("disconnect", () => {
       console.log("Disconnected from server");
       setIsConnected(false);
+    });
+
+    newSocket.on("update", async () => {
+      console.log("Update received from server");
+      await refreshTodos();
     });
 
     newSocket.on("connect_error", (error) => {
