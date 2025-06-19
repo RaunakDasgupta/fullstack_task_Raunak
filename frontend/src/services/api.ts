@@ -1,7 +1,7 @@
 import axios from "axios";
 import { TodoItem, ApiResponse } from "../types";
 
-const API_BASE_URL = "http://localhost:3001/api";
+const API_BASE_URL = "http://35.154.65.190:3001/api";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
