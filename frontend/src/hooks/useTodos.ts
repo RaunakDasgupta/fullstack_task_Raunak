@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { todoApi } from "../services/api";
 import { TodoItem } from "../types";
 
-interface UseTodosReturn {
+export interface UseTodosReturn {
   todos: TodoItem[];
   loading: boolean;
   error: string | null;
@@ -19,20 +19,22 @@ export const useTodos = (): UseTodosReturn => {
       setError(null);
       const fetchedTodos = await todoApi.fetchAllTasks();
       setTodos(fetchedTodos);
+      setLoading(false);
+      console.log("Todos fetched successfully");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+      setLoading(false);
     }
   }, []);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    await Promise.all([refreshTodos()]);
-    setLoading(false);
-  }, [refreshTodos]);
-
+  // const fetchData = useCallback(async () => {
+  //   setLoading(true);
+  //   await Promise.all([refreshTodos()]);
+  //   setLoading(false);
+  // }, [refreshTodos]);
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    refreshTodos();
+  }, [refreshTodos]);
 
   return {
     todos,
