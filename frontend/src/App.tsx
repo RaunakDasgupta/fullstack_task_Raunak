@@ -13,7 +13,7 @@ function App() {
   const { refreshTodos } = useTodosContext();
 
   useEffect(() => {
-    const newSocket = io("http://0.0.0.0:3001", {
+    const newSocket = io("http://localhost:3001", {
       autoConnect: true,
     });
 
