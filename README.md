@@ -45,6 +45,10 @@ To start the application using Docker, follow these steps:
 
 ## Configuration
 
+### Env file
+
+Sample env file is provided in `backend/.env.sample`.
+
 ### Redis
 
 The Redis configuration is located in `backend/src/config/redis.ts`.
@@ -58,9 +62,9 @@ The Redis configuration is located in `backend/src/config/redis.ts`.
 
 The MongoDB configuration is located in `backend/src/config/database.ts`.
 
-- DB URL: `mongodb+srv://assignment_user:HCgEj5zv8Hxwa4xO@test-cluster.6f94f5o.mongodb.net/`
-- Database: `assignment`
-- Collection: `assignment_raunak`
+- DB URL: `mongodb+srv://assignment_raunak:kazam@cluster0.kaij9yp.mongodb.net/`
+- Database: `test`
+- Collection: `tasks`
 
 ## Docker Compose
 
